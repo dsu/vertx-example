@@ -1,0 +1,143 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.example</groupId>
+	<artifactId>vertx</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>3.3.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-unit</artifactId>
+			<version>3.3.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web</artifactId>
+			<version>3.3.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.pac4j/vertx-pac4j -->
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>vertx-pac4j</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-auth-oauth2</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+
+		<!-- default cluster manager -->
+		<!-- https://mvnrepository.com/artifact/io.vertx/vertx-hazelcast -->
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-hazelcast</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.javaslang/javaslang -->
+		<dependency>
+			<groupId>com.javaslang</groupId>
+			<artifactId>javaslang</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
+		<dependency>
+			<groupId>com.restfb</groupId>
+			<artifactId>restfb</artifactId>
+			<version>1.35.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>1.5.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+
+
+	</dependencies>
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<fork>true</fork>
+					<compilerArgument>-XDignore.symbol.file</compilerArgument>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>io.vertx.core.Starter</Main-Class>
+										<Main-Verticle>vertx.MyFirstWebVerticle</Main-Verticle>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+							<artifactSet />
+							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
